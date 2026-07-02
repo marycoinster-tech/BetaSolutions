@@ -1,6 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Play, ExternalLink, CheckCircle, Zap, TrendingUp, Globe, Users, Star } from "lucide-react";
+import {
+  ArrowRight, Play, ExternalLink, CheckCircle,
+  Zap, TrendingUp, Globe, Users, Star,
+  Settings, Megaphone, Target, BarChart3,
+  MessageSquare, BookOpen, Flame, Layers, ShieldCheck,
+} from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import AnimatedCounter from "@/components/features/AnimatedCounter";
 import { TOOLS, STATS, FLOATING_CARDS, PRODUCTS, SOCIALS } from "@/constants";
@@ -13,6 +18,7 @@ const BG_SLIDES = [
   "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1600&h=900&fit=crop&auto=format",
 ];
 
+// Brand-accurate social icons
 const InstagramIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
@@ -37,6 +43,22 @@ const LinkedInIcon = () => (
   </svg>
 );
 
+// Map icon string name to Lucide component
+const ICON_MAP: Record<string, React.ReactNode> = {
+  TrendingUp: <TrendingUp size={16} />,
+  Zap: <Zap size={16} />,
+  Globe: <Globe size={16} />,
+  Settings: <Settings size={16} />,
+  Megaphone: <Megaphone size={16} />,
+  Target: <Target size={16} />,
+  BarChart3: <BarChart3 size={16} />,
+  MessageSquare: <MessageSquare size={16} />,
+  Flame: <Flame size={20} />,
+  BookOpen: <BookOpen size={20} />,
+  Layers: <Layers size={20} />,
+  ShieldCheck: <ShieldCheck size={20} />,
+};
+
 function HeroSection() {
   const [slideIdx, setSlideIdx] = useState(0);
 
@@ -52,29 +74,27 @@ function HeroSection() {
         {BG_SLIDES.map((src, i) => (
           <div
             key={i}
-            className="absolute inset-0 transition-opacity duration-2000"
+            className="absolute inset-0"
             style={{
               backgroundImage: `url(${src})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               opacity: i === slideIdx ? 1 : 0,
-              filter: "blur(2px) brightness(0.25)",
+              filter: "blur(2px) brightness(0.22)",
               transform: "scale(1.05)",
               transition: "opacity 1.5s ease-in-out",
             }}
           />
         ))}
-        {/* Dark overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/60 via-[#050505]/40 to-[#050505]" />
-        {/* Grid overlay */}
         <div className="absolute inset-0 grid-bg opacity-30" />
       </div>
 
-      {/* Glow orbs */}
-      <div className="absolute top-1/3 left-1/4 w-72 h-72 rounded-full bg-blue-500/10 blur-3xl pointer-events-none" />
-      <div className="absolute top-1/2 right-1/4 w-48 h-48 rounded-full bg-cyan-500/8 blur-3xl pointer-events-none" />
+      {/* Subtle glow orbs — no neon */}
+      <div className="absolute top-1/3 left-1/4 w-72 h-72 rounded-full bg-blue-500/8 blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 right-1/4 w-48 h-48 rounded-full bg-blue-400/5 blur-3xl pointer-events-none" />
 
-      {/* Floating Cards */}
+      {/* Floating Cards with Lucide icons */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block">
         {FLOATING_CARDS.map((card, i) => {
           const positions = [
@@ -92,11 +112,13 @@ function HeroSection() {
           return (
             <div
               key={card.label}
-              className={`absolute animate-float`}
+              className="absolute animate-float"
               style={{ ...pos, animationDelay: delays[i], animationDuration: `${5 + i}s` }}
             >
               <div className={`glass-card px-3 py-2 flex items-center gap-2 bg-gradient-to-br ${card.color} border border-white/10`}>
-                <span className="text-lg">{card.icon}</span>
+                <span style={{ color: card.iconColor }}>
+                  {ICON_MAP[card.icon]}
+                </span>
                 <span className="text-white text-xs font-medium whitespace-nowrap">{card.label}</span>
               </div>
             </div>
@@ -107,13 +129,11 @@ function HeroSection() {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-20">
         <div className="max-w-4xl">
-          {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 glass-card border border-blue-500/20 rounded-full mb-8 animate-fade-in">
             <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
             <span className="text-blue-300 text-sm font-medium">Building businesses that build Africa</span>
           </div>
 
-          {/* Headline */}
           <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[0.95] tracking-tight mb-8 animate-slide-up">
             Build Smarter.
             <br />
@@ -124,43 +144,29 @@ function HeroSection() {
             <span className="text-white/70 text-4xl sm:text-5xl md:text-6xl lg:text-7xl">That Last.</span>
           </h1>
 
-          {/* Sub */}
-          <p className="text-white/60 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl" style={{ animationDelay: "0.3s" }}>
+          <p className="text-white/60 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl">
             Business systems, AI tools, growth frameworks, and startup opportunities designed for ambitious founders.
           </p>
 
-          {/* CTAs */}
           <div className="flex flex-wrap gap-4 mb-16">
             <Link to="/tools" className="btn-primary text-base py-4 px-8">
               Explore Tools <ArrowRight size={18} />
             </Link>
-            <a
-              href={SOCIALS.youtube}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-glass text-base py-4 px-8"
-            >
+            <a href={SOCIALS.youtube} target="_blank" rel="noopener noreferrer" className="btn-glass text-base py-4 px-8">
               <Play size={18} className="text-blue-400" /> Watch on YouTube
             </a>
           </div>
 
-          {/* Social Links */}
           <div className="flex items-center gap-2 flex-wrap">
             <span className="text-white/30 text-xs uppercase tracking-widest mr-2">Follow</span>
             {[
-              { href: SOCIALS.instagram, Icon: InstagramIcon, label: "Instagram" },
-              { href: SOCIALS.tiktok, Icon: TikTokIcon, label: "TikTok" },
-              { href: SOCIALS.youtube, Icon: YouTubeIcon, label: "YouTube" },
-              { href: SOCIALS.linkedin, Icon: LinkedInIcon, label: "LinkedIn" },
-            ].map(({ href, Icon, label }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="w-9 h-9 rounded-xl glass-card flex items-center justify-center text-white/50 hover:text-blue-400 transition-all duration-300 border border-white/5 hover:border-blue-500/30"
-              >
+              { href: SOCIALS.instagram, Icon: InstagramIcon, label: "Instagram", color: "hover:text-[#E1306C]" },
+              { href: SOCIALS.tiktok, Icon: TikTokIcon, label: "TikTok", color: "hover:text-white" },
+              { href: SOCIALS.youtube, Icon: YouTubeIcon, label: "YouTube", color: "hover:text-[#FF0000]" },
+              { href: SOCIALS.linkedin, Icon: LinkedInIcon, label: "LinkedIn", color: "hover:text-[#0A66C2]" },
+            ].map(({ href, Icon, label, color }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
+                className={`w-9 h-9 rounded-xl glass-card flex items-center justify-center text-white/50 ${color} transition-all duration-300 border border-white/5 hover:border-white/15`}>
                 <Icon />
               </a>
             ))}
@@ -168,10 +174,9 @@ function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-        <div className="w-[1px] h-12 bg-gradient-to-b from-blue-400/0 to-blue-400/60" />
-        <div className="w-1.5 h-1.5 rounded-full bg-blue-400/60" />
+        <div className="w-[1px] h-12 bg-gradient-to-b from-blue-400/0 to-blue-400/40" />
+        <div className="w-1.5 h-1.5 rounded-full bg-blue-400/50" />
       </div>
     </section>
   );
@@ -192,6 +197,112 @@ function StatsSection() {
   );
 }
 
+// Animated ecosystem with SVG connection lines
+function EcosystemVisual() {
+  const nodes = [
+    { label: "Beta Solutions", main: true, x: 50, y: 8 },
+    { label: "Education", x: 20, y: 30 },
+    { label: "Community", x: 80, y: 30 },
+    { label: "AI Tools", x: 20, y: 55 },
+    { label: "Automation", x: 80, y: 55 },
+    { label: "Growth", x: 50, y: 75 },
+    { label: "Business Results", main: false, x: 50, y: 95 },
+  ];
+
+  const connections = [
+    [0, 1], [0, 2],
+    [1, 3], [2, 4],
+    [3, 5], [4, 5],
+    [5, 6],
+  ];
+
+  return (
+    <div className="relative w-full max-w-2xl mx-auto" style={{ height: 420 }}>
+      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+        {connections.map(([from, to], i) => {
+          const a = nodes[from];
+          const b = nodes[to];
+          return (
+            <line
+              key={i}
+              x1={`${a.x}%`} y1={`${a.y}%`}
+              x2={`${b.x}%`} y2={`${b.y}%`}
+              stroke="rgba(59,130,246,0.35)"
+              strokeWidth="0.4"
+              strokeDasharray="2 2"
+              className="ecosystem-line"
+              style={{ animationDelay: `${i * 0.4}s` }}
+            />
+          );
+        })}
+        {/* Data particles as animated circles on paths */}
+        {connections.map(([from, to], i) => {
+          const a = nodes[from];
+          const b = nodes[to];
+          const midX = (a.x + b.x) / 2;
+          const midY = (a.y + b.y) / 2;
+          return (
+            <circle
+              key={`p-${i}`}
+              r="0.8"
+              fill="#60a5fa"
+              opacity="0.7"
+              style={{
+                animation: `data-move-${i} ${2.5 + i * 0.3}s ease-in-out infinite`,
+                animationDelay: `${i * 0.5}s`,
+              }}
+            >
+              <animateMotion
+                dur={`${2.5 + i * 0.3}s`}
+                repeatCount="indefinite"
+                begin={`${i * 0.5}s`}
+              >
+                <mpath xlinkHref={`#path-${i}`} />
+              </animateMotion>
+            </circle>
+          );
+        })}
+        {/* Define paths for particle motion */}
+        <defs>
+          {connections.map(([from, to], i) => {
+            const a = nodes[from];
+            const b = nodes[to];
+            return (
+              <path
+                key={`def-${i}`}
+                id={`path-${i}`}
+                d={`M ${a.x} ${a.y} L ${b.x} ${b.y}`}
+              />
+            );
+          })}
+        </defs>
+      </svg>
+
+      {/* Node labels */}
+      {nodes.map((node, i) => (
+        <div
+          key={node.label}
+          className="absolute transform -translate-x-1/2 -translate-y-1/2"
+          style={{ left: `${node.x}%`, top: `${node.y}%` }}
+        >
+          <div
+            className={`ecosystem-node px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition-all duration-300 ${
+              i === 0
+                ? "bg-blue-600 text-white text-base px-6 py-3 shadow-lg shadow-blue-900/30"
+                : i === 6
+                ? "bg-[#0f172a] border border-blue-500/40 text-blue-300"
+                : "glass-card border border-white/10 text-white/80"
+            }`}
+            style={{ animationDelay: `${i * 0.3}s` }}
+          >
+            {node.label}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function WhatBetaBuilds() {
   const items = [
     {
@@ -200,7 +311,7 @@ function WhatBetaBuilds() {
       desc: "Custom-built tools that automate tasks, verify content, track finances, and generate marketing — all designed for African businesses.",
     },
     {
-      icon: <Globe size={22} className="text-cyan-400" />,
+      icon: <Globe size={22} className="text-blue-300" />,
       title: "Website & Digital Presence",
       desc: "Professional websites, Google Business Profile setup, and SEO strategies that drive real leads and grow your online visibility.",
     },
@@ -210,7 +321,7 @@ function WhatBetaBuilds() {
       desc: "Battle-tested systems and frameworks that help founders move from idea to revenue faster — without guesswork.",
     },
     {
-      icon: <Users size={22} className="text-cyan-400" />,
+      icon: <Users size={22} className="text-blue-300" />,
       title: "Community & Education",
       desc: "A growing network of founders who share resources, opportunities, and accountability to build together.",
     },
@@ -218,7 +329,7 @@ function WhatBetaBuilds() {
 
   return (
     <section className="section-padding relative overflow-hidden" style={{ backgroundImage: `url(${ecosystemBg})`, backgroundSize: "cover", backgroundPosition: "center" }}>
-      <div className="absolute inset-0 bg-[#050505]/90" />
+      <div className="absolute inset-0 bg-[#050505]/92" />
       <div className="relative max-w-7xl mx-auto px-6">
         <div className="text-center mb-16 reveal">
           <p className="text-blue-400 text-sm font-medium uppercase tracking-widest mb-4">The Ecosystem</p>
@@ -230,37 +341,15 @@ function WhatBetaBuilds() {
           </p>
         </div>
 
-        {/* Ecosystem visual */}
-        <div className="flex flex-col items-center gap-0 mb-16 reveal reveal-delay-2">
-          {["Beta Solutions", "Education + Community", "AI Tools + Systems", "Automation + Growth", "Business Results"].map((node, i) => (
-            <div key={node} className="flex flex-col items-center">
-              <div className={`px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300 ${
-                i === 0
-                  ? "bg-blue-500 text-white glow-blue text-base px-8 py-4"
-                  : "glass-card border border-blue-500/20 text-white/80"
-              }`}>
-                {node}
-              </div>
-              {i < 4 && (
-                <div className="flex flex-col items-center gap-0.5 my-1">
-                  {[...Array(4)].map((_, j) => (
-                    <div
-                      key={j}
-                      className="w-[1px] h-1.5 bg-blue-500/40"
-                      style={{ opacity: 1 - j * 0.2 }}
-                    />
-                  ))}
-                  <div className="w-1.5 h-1.5 rounded-full bg-blue-500/60 animate-pulse" />
-                </div>
-              )}
-            </div>
-          ))}
+        {/* Animated ecosystem visual */}
+        <div className="mb-16 reveal reveal-delay-2">
+          <EcosystemVisual />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {items.map((item, i) => (
             <div key={item.title} className={`glass-card gradient-border p-6 reveal reveal-delay-${i + 1} tool-card`}>
-              <div className="w-11 h-11 rounded-xl bg-blue-500/10 flex items-center justify-center mb-4">
+              <div className="w-11 h-11 rounded-xl bg-blue-500/10 flex items-center justify-center mb-4 border border-blue-500/15">
                 {item.icon}
               </div>
               <h3 className="font-display text-lg font-bold text-white mb-2">{item.title}</h3>
@@ -273,10 +362,24 @@ function WhatBetaBuilds() {
   );
 }
 
+const TOOL_ICONS: Record<string, React.ReactNode> = {
+  Flame: <Flame size={28} />,
+  BookOpen: <BookOpen size={28} />,
+  Layers: <Layers size={28} />,
+  ShieldCheck: <ShieldCheck size={28} />,
+};
+
+const TOOL_ICON_COLORS: Record<string, string> = {
+  Flame: "#f97316",
+  BookOpen: "#22c55e",
+  Layers: "#3b82f6",
+  ShieldCheck: "#8b5cf6",
+};
+
 function ToolsPreviewSection() {
   return (
     <section className="section-padding relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-blue-500/30 to-transparent" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 reveal">
           <div>
@@ -294,8 +397,11 @@ function ToolsPreviewSection() {
           {TOOLS.map((tool, i) => (
             <div key={tool.id} className={`glass-card gradient-border p-7 tool-card reveal reveal-delay-${i + 1} cursor-pointer`}>
               <div className="flex items-start justify-between mb-5">
-                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${tool.color} flex items-center justify-center text-2xl border border-white/10`}>
-                  {tool.icon}
+                <div
+                  className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${tool.color} flex items-center justify-center border border-white/10`}
+                  style={{ color: TOOL_ICON_COLORS[tool.icon] || "#3b82f6" }}
+                >
+                  {TOOL_ICONS[tool.icon]}
                 </div>
                 <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-300 border border-blue-500/20">
                   {tool.badge}
@@ -306,12 +412,7 @@ function ToolsPreviewSection() {
               </div>
               <h3 className="font-display text-xl font-bold text-white mb-3">{tool.name}</h3>
               <p className="text-white/50 text-sm leading-relaxed mb-6">{tool.description}</p>
-              <a
-                href={tool.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary text-sm py-2.5 px-5 inline-flex"
-              >
+              <a href={tool.url} target="_blank" rel="noopener noreferrer" className="btn-primary text-sm py-2.5 px-5 inline-flex">
                 Open Tool <ExternalLink size={14} />
               </a>
             </div>
@@ -341,12 +442,8 @@ function ProductsSection() {
           {PRODUCTS.map((product, i) => (
             <div
               key={product.id}
-              className={`relative glass-card p-7 tool-card reveal reveal-delay-${i + 1} ${
-                product.popular ? "border-blue-500/40 glow-blue" : ""
-              }`}
-              style={{
-                borderColor: product.popular ? "rgba(59,130,246,0.4)" : undefined,
-              }}
+              className={`relative glass-card p-7 tool-card reveal reveal-delay-${i + 1} ${product.popular ? "border-blue-500/40" : ""}`}
+              style={{ borderColor: product.popular ? "rgba(59,130,246,0.4)" : undefined }}
             >
               {product.popular && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
@@ -371,11 +468,7 @@ function ProductsSection() {
                   </li>
                 ))}
               </ul>
-              <Link
-                to="/contact"
-                className={`w-full justify-center ${product.popular ? "btn-primary" : "btn-glass"}`}
-                style={{ display: "flex" }}
-              >
+              <Link to="/contact" className={`w-full justify-center flex ${product.popular ? "btn-primary" : "btn-glass"}`}>
                 Get Access <ArrowRight size={16} />
               </Link>
             </div>
@@ -388,24 +481,9 @@ function ProductsSection() {
 
 function ContentPreviewSection() {
   const videos = [
-    {
-      title: "How to Start a Business in Nigeria with Zero Capital",
-      thumb: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&h=340&fit=crop",
-      views: "2.4K",
-      date: "2 weeks ago",
-    },
-    {
-      title: "5 AI Tools Every Nigerian Business Owner Must Use",
-      thumb: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&h=340&fit=crop",
-      views: "1.8K",
-      date: "1 month ago",
-    },
-    {
-      title: "How to Build a Digital Product Business from Scratch",
-      thumb: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=340&fit=crop",
-      views: "3.1K",
-      date: "3 weeks ago",
-    },
+    { title: "How to Start a Business in Nigeria with Zero Capital", thumb: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&h=340&fit=crop", views: "2.4K", date: "2 weeks ago" },
+    { title: "5 AI Tools Every Nigerian Business Owner Must Use", thumb: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&h=340&fit=crop", views: "1.8K", date: "1 month ago" },
+    { title: "How to Build a Digital Product Business from Scratch", thumb: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=340&fit=crop", views: "3.1K", date: "3 weeks ago" },
   ];
 
   return (
@@ -423,25 +501,15 @@ function ContentPreviewSection() {
             View All Content <ArrowRight size={16} />
           </Link>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {videos.map((v, i) => (
-            <a
-              key={v.title}
-              href={SOCIALS.youtube}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`group glass-card overflow-hidden tool-card reveal reveal-delay-${i + 1}`}
-            >
+            <a key={v.title} href={SOCIALS.youtube} target="_blank" rel="noopener noreferrer"
+              className={`group glass-card overflow-hidden tool-card reveal reveal-delay-${i + 1}`}>
               <div className="relative overflow-hidden h-44">
-                <img
-                  src={v.thumb}
-                  alt={v.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
+                <img src={v.thumb} alt={v.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="w-14 h-14 rounded-full bg-blue-500/90 flex items-center justify-center glow-blue">
+                  <div className="w-14 h-14 rounded-full bg-[#FF0000]/90 flex items-center justify-center">
                     <Play size={22} fill="white" className="text-white ml-1" />
                   </div>
                 </div>
@@ -450,9 +518,7 @@ function ContentPreviewSection() {
                 </span>
               </div>
               <div className="p-5">
-                <h3 className="font-medium text-white text-sm leading-snug mb-2 group-hover:text-blue-300 transition-colors">
-                  {v.title}
-                </h3>
+                <h3 className="font-medium text-white text-sm leading-snug mb-2 group-hover:text-blue-300 transition-colors">{v.title}</h3>
                 <span className="text-white/30 text-xs">{v.date}</span>
               </div>
             </a>
@@ -480,22 +546,16 @@ function CommunitySection() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 reveal reveal-delay-1">
           {[
-            { icon: "📱", platform: "Telegram Community", desc: "Daily business insights, AI updates and opportunities", cta: "Join Telegram", href: "#" },
-            { icon: <YouTubeIcon />, platform: "YouTube Channel", desc: "100+ videos on business, AI and growth frameworks", cta: "Subscribe", href: SOCIALS.youtube },
-            { icon: "✉️", platform: "Sunday Newsletter", desc: "One lesson, one tool, one opportunity every Sunday", cta: "Subscribe", href: "#newsletter" },
+            { icon: <MessageSquare size={28} className="text-[#2CA5E0]" />, platform: "Telegram Community", desc: "Daily business insights, AI updates and opportunities", cta: "Join Telegram", href: "#" },
+            { icon: <YouTubeIcon />, platform: "YouTube Channel", desc: "100+ videos on business, AI and growth frameworks", cta: "Subscribe", href: SOCIALS.youtube, iconClass: "text-[#FF0000]" },
+            { icon: <TrendingUp size={28} className="text-blue-400" />, platform: "Sunday Newsletter", desc: "One lesson, one tool, one opportunity every Sunday", cta: "Subscribe", href: "#newsletter" },
           ].map((item) => (
             <div key={item.platform} className="glass-card-blue gradient-border p-6 text-center tool-card">
-              <div className="text-3xl mb-4 flex justify-center">
-                {typeof item.icon === "string" ? item.icon : item.icon}
-              </div>
+              <div className="flex justify-center mb-4">{item.icon}</div>
               <h3 className="font-display text-base font-bold text-white mb-2">{item.platform}</h3>
               <p className="text-white/40 text-sm mb-5 leading-relaxed">{item.desc}</p>
-              <a
-                href={item.href}
-                target={item.href.startsWith("http") ? "_blank" : undefined}
-                rel="noopener noreferrer"
-                className="btn-glass text-sm py-2 px-4 inline-flex"
-              >
+              <a href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer"
+                className="btn-glass text-sm py-2 px-4 inline-flex">
                 {item.cta} <ArrowRight size={14} />
               </a>
             </div>
@@ -510,14 +570,8 @@ function CTASection() {
   return (
     <section className="relative py-32 overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-20" />
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(59,130,246,0.12) 0%, transparent 70%)",
-        }}
-      />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
-
+      <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(59,130,246,0.1) 0%, transparent 70%)" }} />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-blue-500/30 to-transparent" />
       <div className="max-w-4xl mx-auto px-6 text-center relative">
         <div className="reveal">
           <p className="text-blue-400 text-sm font-medium uppercase tracking-widest mb-6">Ready?</p>
@@ -545,7 +599,6 @@ function CTASection() {
 
 export default function Home() {
   useScrollReveal();
-
   return (
     <main>
       <HeroSection />

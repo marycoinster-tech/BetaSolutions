@@ -23,7 +23,7 @@ export const TOOLS: Tool[] = [
     name: "ViralForgeAI",
     description: "AI-powered content generator to position your business online and drive engagement across all platforms.",
     url: "https://viral-forge-ai-seven.vercel.app/",
-    icon: "🔥",
+    icon: "Flame",
     category: "Content & Marketing",
     badge: "AI Powered",
     color: "from-orange-500/20 to-red-500/10",
@@ -33,7 +33,7 @@ export const TOOLS: Tool[] = [
     name: "BetaBook",
     description: "Smart financial tracker and records system to monitor profits, losses and overall business performance.",
     url: "https://betabook-tau.vercel.app/",
-    icon: "📊",
+    icon: "BookOpen",
     category: "Finance & Accounting",
     badge: "Smart Finance",
     color: "from-green-500/20 to-emerald-500/10",
@@ -43,7 +43,7 @@ export const TOOLS: Tool[] = [
     name: "OmniDesk",
     description: "All-in-one task automation tool that helps teams stay organised, automate workflows and move faster.",
     url: "https://omnidesk-five.vercel.app/",
-    icon: "⚡",
+    icon: "Layers",
     category: "Automation",
     badge: "Automation",
     color: "from-blue-500/20 to-cyan-500/10",
@@ -53,7 +53,7 @@ export const TOOLS: Tool[] = [
     name: "VerolenteAI",
     description: "Cutting-edge deepfake verification and content authenticity tool to protect your brand integrity.",
     url: "https://verolenteai-silk.vercel.app/",
-    icon: "🛡️",
+    icon: "ShieldCheck",
     category: "Security & Trust",
     badge: "Verification",
     color: "from-purple-500/20 to-indigo-500/10",
@@ -61,14 +61,14 @@ export const TOOLS: Tool[] = [
 ];
 
 export const UTILITY_TOOLS = [
-  { icon: "🏢", name: "Business Name Generator", desc: "AI-generated names for your next brand" },
-  { icon: "📝", name: "Proposal Generator", desc: "Professional proposals in minutes" },
-  { icon: "🧮", name: "Website Cost Calculator", desc: "Estimate your website project budget" },
-  { icon: "📄", name: "Invoice Creator", desc: "Clean invoices for your clients" },
-  { icon: "🗺️", name: "Business Planner", desc: "Structure your business blueprint" },
-  { icon: "✅", name: "Startup Validator", desc: "Validate your idea before building" },
-  { icon: "📣", name: "Marketing Planner", desc: "Build a full marketing calendar" },
-  { icon: "💬", name: "WhatsApp CRM", desc: "Manage client chats like a pro" },
+  { icon: "Building2", name: "Business Name Generator", desc: "AI-generated names for your next brand", iconColor: "#3b82f6" },
+  { icon: "FileText", name: "Proposal Generator", desc: "Professional proposals in minutes", iconColor: "#8b5cf6" },
+  { icon: "Calculator", name: "Website Cost Calculator", desc: "Estimate your website project budget", iconColor: "#f59e0b" },
+  { icon: "Receipt", name: "Invoice Creator", desc: "Clean invoices for your clients", iconColor: "#22c55e" },
+  { icon: "Map", name: "Business Planner", desc: "Structure your business blueprint", iconColor: "#06b6d4" },
+  { icon: "CheckSquare", name: "Startup Validator", desc: "Validate your idea before building", iconColor: "#f97316" },
+  { icon: "CalendarDays", name: "Marketing Planner", desc: "Build a full marketing calendar", iconColor: "#ec4899" },
+  { icon: "MessageCircle", name: "WhatsApp CRM", desc: "Manage client chats like a pro", iconColor: "#10b981" },
 ];
 
 export const OPPORTUNITIES: Opportunity[] = [
@@ -130,7 +130,7 @@ export const RESOURCES: Resource[] = [
     description: "Professional 12-slide pitch deck to win investors and impress clients.",
     type: "PowerPoint",
     downloadUrl: "#",
-    icon: "📊",
+    icon: "BarChart2",
   },
   {
     id: "2",
@@ -138,7 +138,7 @@ export const RESOURCES: Resource[] = [
     description: "Complete business plan framework used by funded Nigerian startups.",
     type: "PDF",
     downloadUrl: "#",
-    icon: "📋",
+    icon: "ClipboardList",
   },
   {
     id: "3",
@@ -146,7 +146,7 @@ export const RESOURCES: Resource[] = [
     description: "Editable invoice, proposal and quote templates for freelancers and agencies.",
     type: "Google Docs",
     downloadUrl: "#",
-    icon: "📄",
+    icon: "FileText",
   },
   {
     id: "4",
@@ -154,7 +154,7 @@ export const RESOURCES: Resource[] = [
     description: "90-day marketing plan to grow your business online with content and ads.",
     type: "Google Sheets",
     downloadUrl: "#",
-    icon: "📣",
+    icon: "Megaphone",
   },
   {
     id: "5",
@@ -162,7 +162,7 @@ export const RESOURCES: Resource[] = [
     description: "Discover your ideal customer and craft messaging that converts every time.",
     type: "PDF",
     downloadUrl: "#",
-    icon: "🎯",
+    icon: "Users",
   },
   {
     id: "6",
@@ -170,7 +170,7 @@ export const RESOURCES: Resource[] = [
     description: "Map out your entire business model on one page. Used by top accelerators.",
     type: "PDF",
     downloadUrl: "#",
-    icon: "🗂️",
+    icon: "LayoutGrid",
   },
 ];
 
@@ -223,7 +223,7 @@ export const PRODUCTS: Product[] = [
 ];
 
 export const SOCIALS = {
-  instagram: "https://www.instagram.com/silipa6354/",
+  instagram: "https://www.instagram.com/i_ambrien/",
   tiktok: "https://www.tiktok.com/@iam_brien",
   facebook: "https://www.facebook.com/profile.php?id=61590617897001",
   youtube: "https://www.youtube.com/@iam_brien",
@@ -231,24 +231,14 @@ export const SOCIALS = {
 };
 
 export const FLOATING_CARDS = [
-  { label: "Revenue ↑", icon: "📈", color: "from-green-500/20 to-emerald-500/10" },
-  { label: "AI Automation", icon: "⚡", color: "from-blue-500/20 to-cyan-500/10" },
-  { label: "Website Design", icon: "🎨", color: "from-purple-500/20 to-indigo-500/10" },
-  { label: "Business Systems", icon: "⚙️", color: "from-orange-500/20 to-red-500/10" },
-  { label: "Marketing", icon: "📣", color: "from-pink-500/20 to-rose-500/10" },
-  { label: "Lead Generation", icon: "🎯", color: "from-yellow-500/20 to-amber-500/10" },
-  { label: "Growth", icon: "🚀", color: "from-blue-500/20 to-violet-500/10" },
-  { label: "CRM", icon: "💬", color: "from-cyan-500/20 to-teal-500/10" },
-];
-
-export const ECOSYSTEM_NODES = [
-  { id: "beta", label: "Beta", level: 0, main: true },
-  { id: "education", label: "Education", level: 1 },
-  { id: "community", label: "Community", level: 1 },
-  { id: "tools", label: "Tools", level: 2 },
-  { id: "automation", label: "Automation", level: 2 },
-  { id: "growth", label: "Growth", level: 3 },
-  { id: "business", label: "Business", level: 4 },
+  { label: "Revenue Growth", icon: "TrendingUp", color: "from-green-500/20 to-emerald-500/10", iconColor: "#22c55e" },
+  { label: "AI Automation", icon: "Zap", color: "from-blue-500/20 to-cyan-500/10", iconColor: "#f59e0b" },
+  { label: "Website Design", icon: "Globe", color: "from-blue-500/20 to-indigo-500/10", iconColor: "#3b82f6" },
+  { label: "Business Systems", icon: "Settings", color: "from-orange-500/20 to-red-500/10", iconColor: "#f97316" },
+  { label: "Marketing", icon: "Megaphone", color: "from-pink-500/20 to-rose-500/10", iconColor: "#ec4899" },
+  { label: "Lead Generation", icon: "Target", color: "from-yellow-500/20 to-amber-500/10", iconColor: "#eab308" },
+  { label: "Growth", icon: "BarChart3", color: "from-blue-500/20 to-violet-500/10", iconColor: "#60a5fa" },
+  { label: "CRM", icon: "MessageSquare", color: "from-cyan-500/20 to-teal-500/10", iconColor: "#06b6d4" },
 ];
 
 export const TIMELINE = [

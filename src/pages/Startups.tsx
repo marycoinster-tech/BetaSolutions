@@ -12,18 +12,25 @@ const BADGE_CONFIGS: Record<string, { color: string; bg: string; icon: React.Rea
   purple: { color: "text-purple-300", bg: "bg-purple-500/10 border-purple-500/20", icon: <Package size={12} /> },
 };
 
-const FILTERS = ["All", "Business Idea", "Grant", "Startup Program", "Remote Job", "AI Opportunity", "Digital Product"];
+const IDEA_ICONS = [
+  <Briefcase size={24} className="text-orange-400" />,
+  <Cpu size={24} className="text-blue-400" />,
+  <TrendingUp size={24} className="text-green-400" />,
+  <Laptop size={24} className="text-cyan-400" />,
+  <Package size={24} className="text-purple-400" />,
+  <Lightbulb size={24} className="text-yellow-400" />,
+];
 
 export default function Startups() {
   useScrollReveal();
 
   const ideas = [
-    { icon: "🍔", title: "Ghost Kitchen / Food Delivery Brand", category: "Business Idea", investment: "₦50K–₦200K", potential: "High", desc: "Start a food brand with no physical restaurant. Use delivery apps and social media to sell consistently." },
-    { icon: "📸", title: "Content Creation Agency", category: "Business Idea", investment: "₦0–₦30K", potential: "High", desc: "Help businesses create content for their social media. Reels, graphics, YouTube — demand is massive." },
-    { icon: "🤖", title: "AI Consulting for SMEs", category: "AI Opportunity", investment: "₦0", potential: "Very High", desc: "Help small businesses integrate AI tools into their workflow. You don't need to code — just know the tools." },
-    { icon: "📚", title: "Online Course Business", category: "Digital Product", investment: "₦0–₦20K", potential: "High", desc: "Package what you know into a course. Sell once, earn forever. Works in any niche." },
-    { icon: "🛒", title: "E-commerce / Dropshipping", category: "Business Idea", investment: "₦30K–₦150K", potential: "Medium-High", desc: "Sell products online without holding inventory. Source locally or internationally and sell at a margin." },
-    { icon: "🌐", title: "Website Design Agency", category: "Business Idea", investment: "₦0", potential: "Very High", desc: "Every business needs a website. Learn to design with no-code tools and charge ₦50K–₦500K per project." },
+    { title: "Ghost Kitchen / Food Delivery Brand", category: "Business Idea", investment: "₦50K–₦200K", potential: "High", desc: "Start a food brand with no physical restaurant. Use delivery apps and social media to sell consistently." },
+    { title: "Content Creation Agency", category: "Business Idea", investment: "₦0–₦30K", potential: "High", desc: "Help businesses create content for their social media. Reels, graphics, YouTube — demand is massive." },
+    { title: "AI Consulting for SMEs", category: "AI Opportunity", investment: "₦0", potential: "Very High", desc: "Help small businesses integrate AI tools into their workflow. You don't need to code — just know the tools." },
+    { title: "Online Course Business", category: "Digital Product", investment: "₦0–₦20K", potential: "High", desc: "Package what you know into a course. Sell once, earn forever. Works in any niche." },
+    { title: "E-commerce / Dropshipping", category: "Business Idea", investment: "₦30K–₦150K", potential: "Medium-High", desc: "Sell products online without holding inventory. Source locally or internationally and sell at a margin." },
+    { title: "Website Design Agency", category: "Business Idea", investment: "₦0", potential: "Very High", desc: "Every business needs a website. Learn to design with no-code tools and charge ₦50K–₦500K per project." },
   ];
 
   const grants = [
@@ -58,7 +65,6 @@ export default function Startups() {
             <h2 className="font-display text-3xl font-bold text-white mb-2">Current <span className="text-gradient">Opportunities</span></h2>
             <p className="text-white/40 text-sm">Curated weekly. Fresh opportunities for ambitious founders.</p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {OPPORTUNITIES.map((opp, i) => {
               const badge = BADGE_CONFIGS[opp.badgeColor] || BADGE_CONFIGS.blue;
@@ -73,12 +79,8 @@ export default function Startups() {
                   <h3 className="font-display text-base font-bold text-white mb-3">{opp.title}</h3>
                   <p className="text-white/50 text-sm leading-relaxed mb-5">{opp.description}</p>
                   {opp.link ? (
-                    <a
-                      href={opp.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-blue-400 text-sm hover:text-blue-300 transition-colors font-medium"
-                    >
+                    <a href={opp.link} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-blue-400 text-sm hover:text-blue-300 transition-colors font-medium">
                       Learn More <ExternalLink size={13} />
                     </a>
                   ) : (
@@ -103,12 +105,13 @@ export default function Startups() {
               Business <span className="text-gradient">Ideas to Start Now</span>
             </h2>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {ideas.map((idea, i) => (
               <div key={idea.title} className={`glass-card p-6 tool-card reveal reveal-delay-${(i % 3) + 1}`}>
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="text-3xl">{idea.icon}</div>
+                  <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
+                    {IDEA_ICONS[i]}
+                  </div>
                   <div>
                     <span className="text-blue-400/70 text-xs uppercase tracking-wide">{idea.category}</span>
                     <h3 className="font-display text-sm font-bold text-white">{idea.title}</h3>
@@ -120,11 +123,9 @@ export default function Startups() {
                     <span className="text-white/30">Investment: </span>
                     <span className="text-white/70 font-medium">{idea.investment}</span>
                   </div>
-                  <div>
-                    <span className={`font-semibold ${idea.potential.includes("Very") ? "text-green-400" : "text-blue-400"}`}>
-                      {idea.potential} Potential
-                    </span>
-                  </div>
+                  <span className={`font-semibold ${idea.potential.includes("Very") ? "text-green-400" : "text-blue-400"}`}>
+                    {idea.potential} Potential
+                  </span>
                 </div>
               </div>
             ))}
@@ -142,7 +143,6 @@ export default function Startups() {
               Grants & <span className="text-gradient">Funding Opportunities</span>
             </h2>
           </div>
-
           <div className="overflow-hidden rounded-2xl border border-white/8">
             <table className="w-full">
               <thead>

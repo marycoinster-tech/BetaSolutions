@@ -1,8 +1,22 @@
-import { Download, FileText, ArrowRight } from "lucide-react";
+import { Download, FileText, ArrowRight, BarChart2, ClipboardList, Megaphone, Users, LayoutGrid } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { RESOURCES, PRODUCTS } from "@/constants";
 import { Link } from "react-router-dom";
 import { CheckCircle } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+
+const LUCIDE_MAP: Record<string, LucideIcon> = {
+  BarChart2, ClipboardList, FileText, Megaphone, Users, LayoutGrid,
+};
+
+const ICON_COLORS: Record<string, string> = {
+  BarChart2: "#3b82f6",
+  ClipboardList: "#8b5cf6",
+  FileText: "#06b6d4",
+  Megaphone: "#ec4899",
+  Users: "#22c55e",
+  LayoutGrid: "#f59e0b",
+};
 
 export default function Resources() {
   useScrollReveal();
@@ -38,27 +52,34 @@ export default function Resources() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {RESOURCES.map((res, i) => (
-              <div key={res.id} className={`glass-card gradient-border p-6 tool-card group reveal reveal-delay-${(i % 3) + 1}`}>
-                <div className="flex items-start gap-4 mb-5">
-                  <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-2xl border border-blue-500/10 flex-shrink-0">
-                    {res.icon}
+            {RESOURCES.map((res, i) => {
+              const IconComponent = LUCIDE_MAP[res.icon] || FileText;
+              const iconColor = ICON_COLORS[res.icon] || "#3b82f6";
+              return (
+                <div key={res.id} className={`glass-card gradient-border p-6 tool-card group reveal reveal-delay-${(i % 3) + 1}`}>
+                  <div className="flex items-start gap-4 mb-5">
+                    <div
+                      className="w-12 h-12 rounded-xl flex items-center justify-center border border-white/10 bg-white/5 flex-shrink-0"
+                      style={{ color: iconColor }}
+                    >
+                      <IconComponent size={22} />
+                    </div>
+                    <div>
+                      <span className="text-white/30 text-xs uppercase tracking-wide">{res.type}</span>
+                      <h3 className="font-display text-base font-bold text-white">{res.title}</h3>
+                    </div>
                   </div>
-                  <div>
-                    <span className="text-white/30 text-xs uppercase tracking-wide">{res.type}</span>
-                    <h3 className="font-display text-base font-bold text-white">{res.title}</h3>
-                  </div>
+                  <p className="text-white/50 text-sm leading-relaxed mb-6">{res.description}</p>
+                  <a
+                    href={res.downloadUrl}
+                    className="inline-flex items-center gap-2 btn-glass text-sm py-2.5 px-4 w-full justify-center group-hover:border-blue-500/30 group-hover:text-blue-300 transition-all duration-300"
+                  >
+                    <Download size={15} className="group-hover:text-blue-400" />
+                    Download Free
+                  </a>
                 </div>
-                <p className="text-white/50 text-sm leading-relaxed mb-6">{res.description}</p>
-                <a
-                  href={res.downloadUrl}
-                  className="inline-flex items-center gap-2 btn-glass text-sm py-2.5 px-4 w-full justify-center group-hover:border-blue-500/30 group-hover:text-blue-300 transition-all duration-300"
-                >
-                  <Download size={15} className="group-hover:text-blue-400" />
-                  Download Free
-                </a>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -103,10 +124,7 @@ export default function Resources() {
                     </li>
                   ))}
                 </ul>
-                <Link
-                  to="/contact"
-                  className={`w-full justify-center flex ${product.popular ? "btn-primary" : "btn-glass"}`}
-                >
+                <Link to="/contact" className={`w-full justify-center flex ${product.popular ? "btn-primary" : "btn-glass"}`}>
                   Get Access <ArrowRight size={16} />
                 </Link>
               </div>
@@ -127,13 +145,15 @@ export default function Resources() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {[
-              { icon: "💬", title: "Sales Call Script", desc: "A word-for-word framework for closing clients on discovery calls.", badge: "Free" },
-              { icon: "📧", title: "Cold Email Templates", desc: "5 cold email templates that have gotten real responses from Nigerian businesses.", badge: "Free" },
-              { icon: "📱", title: "DM Outreach Templates", desc: "Instagram and WhatsApp DM templates for reaching potential clients professionally.", badge: "Free" },
-              { icon: "🎯", title: "Lead Magnet Playbook", desc: "Step-by-step guide to creating a lead magnet that builds your email list fast.", badge: "Free" },
+              { icon: <Users size={24} className="text-blue-400" />, title: "Sales Call Script", desc: "A word-for-word framework for closing clients on discovery calls.", badge: "Free" },
+              { icon: <FileText size={24} className="text-purple-400" />, title: "Cold Email Templates", desc: "5 cold email templates that have gotten real responses from Nigerian businesses.", badge: "Free" },
+              { icon: <Megaphone size={24} className="text-pink-400" />, title: "DM Outreach Templates", desc: "Instagram and WhatsApp DM templates for reaching potential clients professionally.", badge: "Free" },
+              { icon: <BarChart2 size={24} className="text-green-400" />, title: "Lead Magnet Playbook", desc: "Step-by-step guide to creating a lead magnet that builds your email list fast.", badge: "Free" },
             ].map((item, i) => (
               <div key={item.title} className={`glass-card p-6 tool-card reveal reveal-delay-${i + 1} flex items-start gap-5`}>
-                <div className="text-3xl flex-shrink-0">{item.icon}</div>
+                <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
+                  {item.icon}
+                </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
                     <h3 className="font-display text-base font-bold text-white">{item.title}</h3>
@@ -141,7 +161,7 @@ export default function Resources() {
                   </div>
                   <p className="text-white/50 text-sm leading-relaxed mb-4">{item.desc}</p>
                   <button className="inline-flex items-center gap-2 text-blue-400 text-sm hover:text-blue-300 transition-colors font-medium">
-                    <FileText size={13} /> Download
+                    <Download size={13} /> Download
                   </button>
                 </div>
               </div>

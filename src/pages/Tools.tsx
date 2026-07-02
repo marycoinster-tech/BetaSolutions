@@ -1,8 +1,23 @@
-import { ExternalLink, Zap } from "lucide-react";
+import { ExternalLink, Zap, Flame, BookOpen, Layers, ShieldCheck, Building2, FileText, Calculator, Receipt, Map, CheckSquare, CalendarDays, MessageCircle } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { TOOLS, UTILITY_TOOLS } from "@/constants";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+
+const LUCIDE_MAP: Record<string, LucideIcon> = {
+  Flame, BookOpen, Layers, ShieldCheck,
+  Building2, FileText, Calculator, Receipt,
+  Map, CheckSquare, CalendarDays, MessageCircle,
+  Zap,
+};
+
+const TOOL_ICON_COLORS: Record<string, string> = {
+  Flame: "#f97316",
+  BookOpen: "#22c55e",
+  Layers: "#3b82f6",
+  ShieldCheck: "#8b5cf6",
+};
 
 export default function Tools() {
   useScrollReveal();
@@ -12,7 +27,7 @@ export default function Tools() {
       {/* Hero */}
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 grid-bg opacity-20" />
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-blue-500/8 blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-blue-500/6 blur-3xl pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 text-center reveal">
           <p className="text-blue-400 text-sm font-medium uppercase tracking-widest mb-4">Beta Suite</p>
           <h1 className="font-display text-5xl md:text-6xl font-black text-white mb-6">
@@ -31,48 +46,40 @@ export default function Tools() {
             <span className="text-gradient">AI-Powered</span> Core Tools
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {TOOLS.map((tool, i) => (
-              <div key={tool.id} className={`glass-card gradient-border p-8 tool-card reveal reveal-delay-${i + 1} relative overflow-hidden`}>
-                {/* Background glow */}
-                <div className={`absolute -right-12 -top-12 w-32 h-32 rounded-full bg-gradient-to-br ${tool.color} blur-2xl pointer-events-none opacity-60`} />
-
-                <div className="relative">
-                  <div className="flex items-start justify-between mb-6">
-                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${tool.color} flex items-center justify-center text-3xl border border-white/10`}>
-                      {tool.icon}
+            {TOOLS.map((tool, i) => {
+              const IconComponent = LUCIDE_MAP[tool.icon] || Zap;
+              return (
+                <div key={tool.id} className={`glass-card gradient-border p-8 tool-card reveal reveal-delay-${i + 1} relative overflow-hidden`}>
+                  <div className={`absolute -right-12 -top-12 w-32 h-32 rounded-full bg-gradient-to-br ${tool.color} blur-2xl pointer-events-none opacity-40`} />
+                  <div className="relative">
+                    <div className="flex items-start justify-between mb-6">
+                      <div
+                        className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${tool.color} flex items-center justify-center border border-white/10`}
+                        style={{ color: TOOL_ICON_COLORS[tool.icon] || "#3b82f6" }}
+                      >
+                        <IconComponent size={30} />
+                      </div>
+                      <div className="flex flex-col items-end gap-2">
+                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-300 border border-blue-500/20">
+                          {tool.badge}
+                        </span>
+                        <span className="text-white/30 text-xs">{tool.category}</span>
+                      </div>
                     </div>
-                    <div className="flex flex-col items-end gap-2">
-                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-300 border border-blue-500/20">
-                        {tool.badge}
-                      </span>
-                      <span className="text-white/30 text-xs">{tool.category}</span>
+                    <h3 className="font-display text-2xl font-bold text-white mb-3">{tool.name}</h3>
+                    <p className="text-white/55 leading-relaxed mb-8">{tool.description}</p>
+                    <div className="flex items-center gap-3">
+                      <a href={tool.url} target="_blank" rel="noopener noreferrer" className="btn-primary py-3 px-6">
+                        Open Tool <ExternalLink size={15} />
+                      </a>
+                      <a href={tool.url} target="_blank" rel="noopener noreferrer" className="btn-glass py-3 px-6">
+                        Learn More
+                      </a>
                     </div>
-                  </div>
-
-                  <h3 className="font-display text-2xl font-bold text-white mb-3">{tool.name}</h3>
-                  <p className="text-white/55 leading-relaxed mb-8">{tool.description}</p>
-
-                  <div className="flex items-center gap-3">
-                    <a
-                      href={tool.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-primary py-3 px-6"
-                    >
-                      Open Tool <ExternalLink size={15} />
-                    </a>
-                    <a
-                      href={tool.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-glass py-3 px-6"
-                    >
-                      Learn More
-                    </a>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -90,20 +97,22 @@ export default function Tools() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-            {UTILITY_TOOLS.map((tool, i) => (
-              <div
-                key={tool.name}
-                className={`glass-card p-5 tool-card reveal reveal-delay-${(i % 4) + 1} cursor-pointer group`}
-              >
-                <div className="text-2xl mb-4">{tool.icon}</div>
-                <h3 className="font-display text-sm font-bold text-white mb-2 group-hover:text-blue-300 transition-colors">{tool.name}</h3>
-                <p className="text-white/40 text-xs leading-relaxed">{tool.desc}</p>
-                <div className="mt-4 flex items-center gap-1.5 text-blue-400/50 text-xs group-hover:text-blue-400 transition-colors">
-                  <Zap size={10} />
-                  <span>Coming Soon</span>
+            {UTILITY_TOOLS.map((tool, i) => {
+              const IconComponent = LUCIDE_MAP[tool.icon] || Zap;
+              return (
+                <div key={tool.name} className={`glass-card p-5 tool-card reveal reveal-delay-${(i % 4) + 1} cursor-pointer group`}>
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 border border-white/10 bg-white/5" style={{ color: tool.iconColor }}>
+                    <IconComponent size={20} />
+                  </div>
+                  <h3 className="font-display text-sm font-bold text-white mb-2 group-hover:text-blue-300 transition-colors">{tool.name}</h3>
+                  <p className="text-white/40 text-xs leading-relaxed">{tool.desc}</p>
+                  <div className="mt-4 flex items-center gap-1.5 text-white/30 text-xs group-hover:text-blue-400 transition-colors">
+                    <Zap size={10} />
+                    <span>Coming Soon</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -132,7 +141,7 @@ export default function Tools() {
                   "Ongoing website maintenance & updates",
                 ].map((item) => (
                   <div key={item} className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div className="w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0 mt-0.5 border border-blue-500/20">
                       <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                     </div>
                     <span className="text-white/70 text-sm">{item}</span>
@@ -148,19 +157,18 @@ export default function Tools() {
 
             <div className="reveal reveal-delay-2">
               <div className="relative">
-                <div className="absolute -inset-4 bg-blue-500/5 rounded-3xl blur-xl" />
+                <div className="absolute -inset-4 bg-blue-500/4 rounded-3xl blur-xl" />
                 <div className="glass-card-blue gradient-border p-8 rounded-3xl">
                   <div className="grid grid-cols-2 gap-5">
                     {[
-                      { label: "Websites Built", value: "20+", icon: "🌐" },
-                      { label: "Avg. Load Time", value: "<2s", icon: "⚡" },
-                      { label: "Google Rankings", value: "Top 3", icon: "📈" },
-                      { label: "Client Satisfaction", value: "100%", icon: "⭐" },
+                      { label: "Websites Built", value: "20+", color: "text-blue-400" },
+                      { label: "Avg. Load Time", value: "<2s", color: "text-yellow-400" },
+                      { label: "Google Rankings", value: "Top 3", color: "text-green-400" },
+                      { label: "Client Satisfaction", value: "100%", color: "text-blue-300" },
                     ].map((stat) => (
                       <div key={stat.label} className="glass-card p-5 rounded-xl text-center">
-                        <div className="text-2xl mb-2">{stat.icon}</div>
-                        <div className="font-display text-xl font-bold text-blue-400">{stat.value}</div>
-                        <div className="text-white/40 text-xs mt-1">{stat.label}</div>
+                        <div className={`font-display text-xl font-bold ${stat.color} mb-1`}>{stat.value}</div>
+                        <div className="text-white/40 text-xs">{stat.label}</div>
                       </div>
                     ))}
                   </div>

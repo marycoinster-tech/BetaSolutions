@@ -91,12 +91,12 @@
     pointer-events: none;
   }
 
-  /* Glow effects */
+  /* Glow effects — subtle only, no neon */
   .glow-blue {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3), 0 0 60px rgba(59, 130, 246, 0.1);
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.18);
   }
   .glow-blue-hover:hover {
-    box-shadow: 0 0 30px rgba(59, 130, 246, 0.5), 0 0 80px rgba(59, 130, 246, 0.2);
+    box-shadow: 0 0 18px rgba(59, 130, 246, 0.28);
     transition: box-shadow 0.3s ease;
   }
 
@@ -118,11 +118,11 @@
   /* Button styles */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#3B82F6] text-white font-semibold rounded-xl transition-all duration-300;
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.25);
   }
   .btn-primary:hover {
     @apply bg-[#2563EB] scale-105;
-    box-shadow: 0 0 30px rgba(59, 130, 246, 0.6), 0 0 60px rgba(59, 130, 246, 0.2);
+    box-shadow: 0 6px 24px rgba(59, 130, 246, 0.35);
   }
   .btn-primary:active {
     @apply scale-95;
@@ -246,6 +246,30 @@
   border-radius: 50%;
   background: rgba(59, 130, 246, 0.3);
   animation: particle-float 8s ease-in-out infinite;
+}
+
+/* Ecosystem animated connection lines */
+@keyframes flow-down {
+  0% { stroke-dashoffset: 100; opacity: 0.2; }
+  50% { opacity: 0.8; }
+  100% { stroke-dashoffset: 0; opacity: 0.2; }
+}
+@keyframes pulse-node {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+@keyframes data-particle {
+  0% { offset-distance: 0%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+.ecosystem-line {
+  stroke-dasharray: 8 4;
+  animation: flow-down 2.5s linear infinite;
+}
+.ecosystem-node {
+  animation: pulse-node 2s ease-in-out infinite;
 }
 
 @keyframes particle-float {
