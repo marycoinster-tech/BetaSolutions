@@ -8,6 +8,8 @@ import {
 } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import AnimatedCounter from "@/components/features/AnimatedCounter";
+import Testimonials from "@/components/features/Testimonials";
+import ParticleCanvas from "@/components/features/ParticleCanvas";
 import { TOOLS, STATS, FLOATING_CARDS, PRODUCTS, SOCIALS } from "@/constants";
 import heroBg from "@/assets/hero-bg.jpg";
 import ecosystemBg from "@/assets/ecosystem-bg.jpg";
@@ -80,22 +82,27 @@ function HeroSection() {
               backgroundSize: "cover",
               backgroundPosition: "center",
               opacity: i === slideIdx ? 1 : 0,
-              filter: "blur(2px) brightness(0.22)",
+              filter: "blur(2px) brightness(0.18)",
               transform: "scale(1.05)",
               transition: "opacity 1.5s ease-in-out",
             }}
           />
         ))}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/60 via-[#050505]/40 to-[#050505]" />
-        <div className="absolute inset-0 grid-bg opacity-30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/65 via-[#050505]/45 to-[#050505]" />
+        <div className="absolute inset-0 grid-bg opacity-25" />
+      </div>
+
+      {/* Neural network particle canvas */}
+      <div className="absolute inset-0" style={{ zIndex: 1 }}>
+        <ParticleCanvas />
       </div>
 
       {/* Subtle glow orbs — no neon */}
-      <div className="absolute top-1/3 left-1/4 w-72 h-72 rounded-full bg-blue-500/8 blur-3xl pointer-events-none" />
-      <div className="absolute top-1/2 right-1/4 w-48 h-48 rounded-full bg-blue-400/5 blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 left-1/4 w-72 h-72 rounded-full bg-blue-500/6 blur-3xl pointer-events-none" style={{ zIndex: 1 }} />
+      <div className="absolute top-1/2 right-1/4 w-48 h-48 rounded-full bg-blue-400/4 blur-3xl pointer-events-none" style={{ zIndex: 1 }} />
 
       {/* Floating Cards with Lucide icons */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block" style={{ zIndex: 2 }}>
         {FLOATING_CARDS.map((card, i) => {
           const positions = [
             { top: "12%", left: "6%" },
@@ -127,14 +134,14 @@ function HeroSection() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-20">
+      <div className="relative max-w-7xl mx-auto px-6 pt-28 pb-20" style={{ zIndex: 3 }}>
         <div className="max-w-4xl">
-          <div className="inline-flex items-center gap-2 px-4 py-2 glass-card border border-blue-500/20 rounded-full mb-8 animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-4 py-2 glass-card border border-blue-500/20 rounded-full mb-8">
             <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
             <span className="text-blue-300 text-sm font-medium">Building businesses that build Africa</span>
           </div>
 
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[0.95] tracking-tight mb-8 animate-slide-up">
+          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[0.95] tracking-tight mb-8">
             Build Smarter.
             <br />
             <span className="text-gradient">Scale Faster.</span>
@@ -174,7 +181,7 @@ function HeroSection() {
         </div>
       </div>
 
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce" style={{ zIndex: 3 }}>
         <div className="w-[1px] h-12 bg-gradient-to-b from-blue-400/0 to-blue-400/40" />
         <div className="w-1.5 h-1.5 rounded-full bg-blue-400/50" />
       </div>
@@ -235,34 +242,6 @@ function EcosystemVisual() {
             />
           );
         })}
-        {/* Data particles as animated circles on paths */}
-        {connections.map(([from, to], i) => {
-          const a = nodes[from];
-          const b = nodes[to];
-          const midX = (a.x + b.x) / 2;
-          const midY = (a.y + b.y) / 2;
-          return (
-            <circle
-              key={`p-${i}`}
-              r="0.8"
-              fill="#60a5fa"
-              opacity="0.7"
-              style={{
-                animation: `data-move-${i} ${2.5 + i * 0.3}s ease-in-out infinite`,
-                animationDelay: `${i * 0.5}s`,
-              }}
-            >
-              <animateMotion
-                dur={`${2.5 + i * 0.3}s`}
-                repeatCount="indefinite"
-                begin={`${i * 0.5}s`}
-              >
-                <mpath xlinkHref={`#path-${i}`} />
-              </animateMotion>
-            </circle>
-          );
-        })}
-        {/* Define paths for particle motion */}
         <defs>
           {connections.map(([from, to], i) => {
             const a = nodes[from];
@@ -276,9 +255,17 @@ function EcosystemVisual() {
             );
           })}
         </defs>
+        {connections.map(([from, to], i) => {
+          return (
+            <circle key={`p-${i}`} r="0.8" fill="#60a5fa" opacity="0.7">
+              <animateMotion dur={`${2.5 + i * 0.3}s`} repeatCount="indefinite" begin={`${i * 0.5}s`}>
+                <mpath xlinkHref={`#path-${i}`} />
+              </animateMotion>
+            </circle>
+          );
+        })}
       </svg>
 
-      {/* Node labels */}
       {nodes.map((node, i) => (
         <div
           key={node.label}
@@ -341,7 +328,6 @@ function WhatBetaBuilds() {
           </p>
         </div>
 
-        {/* Animated ecosystem visual */}
         <div className="mb-16 reveal reveal-delay-2">
           <EcosystemVisual />
         </div>
@@ -605,6 +591,8 @@ export default function Home() {
       <StatsSection />
       <WhatBetaBuilds />
       <ToolsPreviewSection />
+      {/* Testimonials carousel after tools */}
+      <Testimonials />
       <ProductsSection />
       <ContentPreviewSection />
       <CommunitySection />

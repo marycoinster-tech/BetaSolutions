@@ -9,6 +9,8 @@ import Startups from "@/pages/Startups";
 import Resources from "@/pages/Resources";
 import Content from "@/pages/Content";
 import Contact from "@/pages/Contact";
+import Blog from "@/pages/Blog";
+import BlogPost from "@/pages/BlogPost";
 import NotFound from "@/pages/NotFound";
 
 export default function App() {
@@ -23,6 +25,8 @@ export default function App() {
         <Route path="/startups" element={<Startups />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/content" element={<Content />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
