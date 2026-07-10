@@ -126,8 +126,8 @@ export default function Footer() {
             <h4 className="text-white font-semibold mb-5 text-sm uppercase tracking-widest">Tools</h4>
             <ul className="space-y-3">
               {[
-                { name: "ViralForgeAI", url: "https://viral-forge-ai-seven.vercel.app/" },
-                { name: "BetaBook", url: "https://betabook-tau.vercel.app/" },
+                { name: "ViralForgeAI", url: "https://viral-forge-ai-omega.vercel.app/" },
+                { name: "BetaBook", url: "https://ibetabook.vercel.app/" },
                 { name: "OmniDesk", url: "https://omnidesk-five.vercel.app/" },
                 { name: "VerolenteAI", url: "https://verolenteai-silk.vercel.app/" },
               ].map((t) => (

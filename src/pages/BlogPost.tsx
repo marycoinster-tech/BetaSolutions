@@ -3,6 +3,7 @@ import { Clock, Calendar, ArrowLeft, ArrowRight, Share2, BookOpen } from "lucide
 import { useEffect } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { BLOG_POSTS } from "@/constants/blog";
+import NewsletterPopup from "@/components/features/NewsletterPopup";
 
 export default function BlogPost() {
   useScrollReveal();
@@ -36,6 +37,7 @@ export default function BlogPost() {
 
   return (
     <main className="pt-24">
+      <NewsletterPopup />
       {/* Back */}
       <div className="max-w-4xl mx-auto px-6 pt-6 pb-0">
         <Link

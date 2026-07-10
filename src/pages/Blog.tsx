@@ -3,6 +3,7 @@ import { Clock, Calendar, ArrowRight, Search } from "lucide-react";
 import { useState } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { BLOG_POSTS } from "@/constants/blog";
+import NewsletterPopup from "@/components/features/NewsletterPopup";
 
 const ALL_CATEGORIES = ["All", "Business", "AI Tools", "Marketing", "Startups", "Automation"];
 
@@ -23,6 +24,7 @@ export default function Blog() {
 
   return (
     <main className="pt-24">
+      <NewsletterPopup />
       {/* Hero */}
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 grid-bg opacity-20" />
